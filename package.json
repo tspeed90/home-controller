@@ -1,0 +1,28 @@
+{
+  "name": "home-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tspeed90/home-controller.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tspeed90/home-controller/issues"
+  },
+  "homepage": "https://github.com/tspeed90/home-controller#readme",
+  "dependencies": {
+    "actions-on-google": "^1.11.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "google-auth-library": "^1.4.0",
+    "googleapis": "^30.0.0",
+    "ngrok": "^3.0.1"
+  }
+}
