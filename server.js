@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 const port = 8080;
+const authCode = 'fdasjafluudsadj54qrwqfafda$';
 
 
 app.listen(port, () => {
@@ -23,8 +24,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth', (req, res) => {
-  console.log('at auth!');
-  res.redirect(302, '/');
+  console.log(req.query);
+  const redirectUrl = req.query.redirect_uri;
+  const state = req.query.state;
+  res.redirect(`${redirectUrl}?code=${authCode}&state=${state}`);
   res.end();
 });
 
