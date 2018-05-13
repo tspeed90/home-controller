@@ -12,13 +12,13 @@ app.listen(port, () => {
   console.log(`app is running on port ${port}`);
 });
 
-if (fs.existsSync('./sslcert/fullchain.pem', () => {
+if (fs.existsSync('./sslcert/fullchain.pem')) {
   const options = {
     cert: fs.readFileSync('./sslcert/fullchain.pem'),
     key: fs.readFileSync('./sslcert/privkey.pem')
   };
   https.createServer(options, app).listen(8443);
-}));
+};
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello World</h1>');
