@@ -1,6 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 8080;
@@ -20,19 +21,22 @@ if (fs.existsSync('./sslcert/fullchain.pem')) {
   https.createServer(options, app).listen(8443);
 };
 
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get('/', (req, res) => {
   res.send('<h1>Hello World</h1>');
 });
 
-app.get('/auth', (req, res) => {
+app.get('/oauth', (req, res) => {
   const redirectUrl = req.query.redirect_uri;
   const state = req.query.state;
   res.redirect(`${redirectUrl}?code=${authCode}&state=${state}`);
   res.end();
 });
 
-app.get('/token', (req, res) => {
-  const code = req.query.code;
+app.all('/token', (req, res) => {
+  const code = req.body.code || req.query.code;
   if (code !== authCode) {
     res.status(400);
     return res.send('Invalid Code');
@@ -46,5 +50,3 @@ app.get('/token', (req, res) => {
 
 
 });
-
-app.use(express.static('public'));
