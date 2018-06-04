@@ -2,12 +2,12 @@ const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
+const homeApp = require('./smarthome');
 
 const app = express();
 const port = 8080;
 const authCode = 'fdasjafluudsadj54qrwqfafda$';
 const token = 'fdajklfdajkt5egdadsafgg';
-
 
 app.listen(port, () => {
   console.log(`app is running on port ${port}`);
@@ -19,7 +19,7 @@ if (fs.existsSync('./sslcert/fullchain.pem')) {
     key: fs.readFileSync('./sslcert/privkey.pem')
   };
   https.createServer(options, app).listen(8443);
-};
+}
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,8 +45,8 @@ app.all('/token', (req, res) => {
   res.status(200).json({
     token_type: 'bearer',
     access_token: token,
-    refresh_token: token,
+    refresh_token: token
   });
-
-
 });
+
+app.use(homeApp);
