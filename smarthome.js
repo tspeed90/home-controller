@@ -7,7 +7,7 @@ const homeApp = smarthome({
 homeApp.onSync(body => {
   //need to pass the requestID back in response
   const response = {
-    requestId: req.body.requestId,
+    requestId: body.requestId,
     payload: {
       devices: [
         {
@@ -22,6 +22,8 @@ homeApp.onSync(body => {
       ]
     }
   };
+
+  return response;
 });
 
 module.exports = homeApp;
