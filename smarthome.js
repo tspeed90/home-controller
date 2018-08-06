@@ -1,4 +1,9 @@
 const { smarthome } = require('actions-on-google');
+let rpi433 = require('rpi-433');
+
+let remoteEmitter = rpi433.emitter({ pin: 22 });
+const LIGHT_ON_CODE = 6277231;
+const LIGHT_OFF_CODE = 6277230;
 
 const homeApp = smarthome({
   key: ''
@@ -27,7 +32,10 @@ homeApp.onSync(body => {
 });
 
 homeApp.onExecute(body => {
-  console.log(body.inputs[0].payload.commands[0].execution[0].params.on);
+  const isOn = body.inputs[0].payload.commands[0].execution[0].params.on;
+
+  remoteEmitter.sendCode(isOn ? LIGHT_ON_CODE : LIGHT_OFF_CODE);
+
   const response = {
     requestID: body.requestId,
     payload: {
@@ -36,7 +44,7 @@ homeApp.onExecute(body => {
           ids: ['lights'],
           status: 'SUCCESS',
           states: {
-            on: body.inputs[0].payload.commands[0].execution[0].params.on
+            on: isOn
           }
         }
       ]
