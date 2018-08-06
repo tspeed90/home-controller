@@ -49,4 +49,4 @@ app.all('/token', (req, res) => {
   });
 });
 
-app.use(homeApp);
+app.use(bodyParser.json(), homeApp);
