@@ -26,4 +26,22 @@ homeApp.onSync(body => {
   return response;
 });
 
+homeApp.onExecute(body => {
+  console.log(body.inputs[0].payload.commands[0].execution[0].params.on);
+  const response = {
+    requestID: body.requestId,
+    payload: {
+      commands: [
+        {
+          ids: ['lights'],
+          status: 'SUCCESS',
+          states: {
+            on: body.inputs[0].payload.commands[0].execution[0].params.on
+          }
+        }
+      ]
+    }
+  };
+  return response;
+});
 module.exports = homeApp;
